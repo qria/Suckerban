@@ -7,6 +7,8 @@ public class SuckerbanObject : MonoBehaviour {
      */
     protected Transform transform;
     protected LevelManager level;
+    public List<Vector2> localPositions; // If this object is spanned
+    // Note that this is relative position to avoid uncessary updates
 
     public void move(Direction direction) {
         transform.position += direction.GetVector();
@@ -16,11 +18,30 @@ public class SuckerbanObject : MonoBehaviour {
         // Difference between push and move is that
         // move just moves it and push propagates it
 
-        SuckerbanObject objInFront = level.GetObjectInPosition(transform.position + direction.GetVector());
-        if (objInFront != null) {
-            objInFront.push(direction);
+        if (localPositions.Count <= 1)
+        {
+            SuckerbanObject objInFront = level.GetObjectInPosition(transform.position + direction.GetVector());
+            if (objInFront != null && objInFront != this)
+            {
+                objInFront.push(direction);
+            }
+            move(direction);
         }
-        move(direction);
+        else
+        {
+            // For Walls
+            // This algorithm breaks down when multiple surface is juxtaposed
+            foreach (Vector2 localPosition in localPositions)
+            {
+                Vector2 positionInFront = (Vector2) transform.position + localPosition + (Vector2)direction.GetVector();
+                SuckerbanObject objInFront = level.GetObjectInPosition(positionInFront);
+                if (objInFront != null && objInFront != this) {
+                    objInFront.push(direction);
+                }
+
+            }
+            move(direction);
+        }
 
     }
 }

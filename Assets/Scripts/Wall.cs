@@ -1,15 +1,15 @@
 ﻿using UnityEngine;
-using System.Collections;
+using System.Collections.Generic;
 
-public class Wall : MonoBehaviour {
+public class Wall : SuckerbanObject{
 
-	// Use this for initialization
-	void Start () {
-	
-	}
-	
-	// Update is called once per frame
-	void Update () {
-	
-	}
+    void Awake() {
+        transform = GetComponent<Transform>();
+        level = FindObjectOfType<LevelManager>();
+        level.Add(this);
+        foreach (Transform childWall in transform)
+        {
+            localPositions.Add(childWall.transform.localPosition);
+        }
+    }
 }

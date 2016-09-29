@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Triangle : SuckerbanObject {
     void Awake() {
         transform = GetComponent<Transform>();
-        level = Object.FindObjectOfType<LevelManager>();
+        level = FindObjectOfType<LevelManager>();
         level.Add(this);
     }
 }

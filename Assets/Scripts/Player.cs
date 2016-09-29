@@ -18,7 +18,7 @@ public class Player : SuckerbanObject {
 	        if (Input.GetKeyDown(direction.GetKeyCode()))
 	        {
 	            push(direction);
-            }
+	        }
 	    }
 	}
 

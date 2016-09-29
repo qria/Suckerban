@@ -4,7 +4,13 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     private List<SuckerbanObject> allObjects = new List<SuckerbanObject>();
+    private AudioSource audio;
     public Player currentPlayer;
+
+    void Awake()
+    {
+        audio = GetComponent<AudioSource>();
+    }
     
 	void Update () {
 	    // Check goal here sometime later
@@ -45,6 +51,7 @@ public class LevelManager : MonoBehaviour
     public void gameOver()
     {
         Debug.Log("YOU DIED");
+        audio.Play();
         Destroy(currentPlayer.transform.gameObject);
     }
 }

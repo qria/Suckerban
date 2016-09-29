@@ -14,7 +14,7 @@ public class SuckerbanObject : MonoBehaviour {
         transform.position += direction.GetVector();
     }
 
-    public void push(Direction direction) {
+    public virtual void push(Direction direction) {
         // Difference between push and move is that
         // move just moves it and push propagates it
 

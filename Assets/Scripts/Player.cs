@@ -8,6 +8,7 @@ public class Player : SuckerbanObject {
         transform = GetComponent<Transform>();
         level = Object.FindObjectOfType<LevelManager>();
         level.Add(this);
+        level.currentPlayer = this;
     }
 	
 	void Update ()
@@ -22,4 +23,18 @@ public class Player : SuckerbanObject {
 	    }
 	}
 
+    public override void push(Direction direction)
+    {
+        SuckerbanObject objInFront = level.GetObjectInPosition(transform.position + direction.GetVector());
+        if (objInFront != null && objInFront != this)
+        {
+            if (direction == Direction.Down && objInFront is Triangle)
+            {
+                level.gameOver();
+                return;
+            }
+            objInFront.push(direction);
+        }
+        move(direction);
+    }
 }

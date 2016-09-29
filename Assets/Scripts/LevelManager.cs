@@ -4,6 +4,7 @@ using System.Collections.Generic;
 public class LevelManager : MonoBehaviour
 {
     private List<SuckerbanObject> allObjects = new List<SuckerbanObject>();
+    public Player currentPlayer;
     
 	void Update () {
 	    // Check goal here sometime later
@@ -39,5 +40,11 @@ public class LevelManager : MonoBehaviour
            
         }
         return null;
+    }
+
+    public void gameOver()
+    {
+        Debug.Log("YOU DIED");
+        Destroy(currentPlayer.transform.gameObject);
     }
 }

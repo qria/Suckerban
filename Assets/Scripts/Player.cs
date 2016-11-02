@@ -23,8 +23,15 @@ public class Player : SuckerbanObject {
 	    }
 	}
 
-    public override void push(Direction direction)
-    {
+    public override void push(Direction direction, List<SuckerbanObject> alreadyPushedObjects = null) {
+
+        alreadyPushedObjects = alreadyPushedObjects ?? new List<SuckerbanObject>(); // Dynamic parameter 
+        // Use alreadyPushedObjects to circumvent recursions
+        if (alreadyPushedObjects.Contains(this)) {
+            return;
+        }
+        alreadyPushedObjects.Add(this);
+
         SuckerbanObject objInFront = level.GetObjectInPosition(transform.position + direction.GetVector());
         if (objInFront != null && objInFront != this)
         {
@@ -33,7 +40,7 @@ public class Player : SuckerbanObject {
                 level.gameOver();
                 return;
             }
-            objInFront.push(direction);
+            objInFront.push(direction, alreadyPushedObjects);
         }
         move(direction);
     }

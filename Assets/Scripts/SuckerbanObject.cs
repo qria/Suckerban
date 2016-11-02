@@ -14,16 +14,22 @@ public class SuckerbanObject : MonoBehaviour {
         transform.position += direction.GetVector();
     }
 
-    public virtual void push(Direction direction) {
+    public virtual void push(Direction direction, List<SuckerbanObject> alreadyPushedObjects=null) {
         // Difference between push and move is that
         // move just moves it and push propagates it
 
-        if (localPositions.Count <= 1)
-        {
+        alreadyPushedObjects = alreadyPushedObjects ?? new List<SuckerbanObject>(); // Dynamic parameter 
+        // Use alreadyPushedObjects to circumvent recursions
+        if (alreadyPushedObjects.Contains(this)) {
+            return;
+        }
+        alreadyPushedObjects.Add(this);
+        
+        if (localPositions.Count <= 1) {
             SuckerbanObject objInFront = level.GetObjectInPosition(transform.position + direction.GetVector());
             if (objInFront != null && objInFront != this)
             {
-                objInFront.push(direction);
+                objInFront.push(direction, alreadyPushedObjects);
             }
             move(direction);
         }
@@ -36,7 +42,7 @@ public class SuckerbanObject : MonoBehaviour {
                 Vector2 positionInFront = (Vector2) transform.position + localPosition + (Vector2)direction.GetVector();
                 SuckerbanObject objInFront = level.GetObjectInPosition(positionInFront);
                 if (objInFront != null && objInFront != this) {
-                    objInFront.push(direction);
+                    objInFront.push(direction, alreadyPushedObjects);
                 }
 
             }

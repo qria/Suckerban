@@ -10,10 +10,10 @@ public class SuckerbanObject : MonoBehaviour {
     public List<Vector2> localPositions; // If this object is spanned
     // Note that this is relative position to avoid uncessary updates
 
-    public void move(Direction direction) {
-        transform.position += direction.GetVector();
+    public void move(Direction direction, float size=1) {
+        transform.position += direction.GetVector() * size;
     }
-
+    
     public virtual void push(Direction direction, List<SuckerbanObject> alreadyPushedObjects=null) {
         // Difference between push and move is that
         // move just moves it and push propagates it

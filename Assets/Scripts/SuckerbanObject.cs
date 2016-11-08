@@ -1,7 +1,6 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
-using Assets.Scripts.Structs;
 
 public class SuckerbanObject : MonoBehaviour {
     /* Can't use GameObjects directly since they are deeply interconnected with the game

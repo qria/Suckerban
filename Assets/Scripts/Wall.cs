@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using Assets.Scripts.Structs;
 
 public class Wall : SuckerbanObject{
 

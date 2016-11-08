@@ -1,5 +1,4 @@
 ﻿using UnityEngine;
-using System.Collections.Generic;
 
 public class Triangle : SuckerbanObject {
     private BoxCollider2D collider;

@@ -1,6 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
-
+using Assets.Scripts.Structs;
 
 public enum Direction {
     Up, Down, Left, Right

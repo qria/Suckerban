@@ -1,5 +1,4 @@
-﻿using System;
-using UnityEngine;
+﻿using UnityEngine;
 using System.Collections.Generic;
 
 
@@ -22,6 +21,15 @@ static class DirectionMethods {
             {Direction.Left, KeyCode.LeftArrow}
         };
 
+    public static Dictionary<KeyCode, Direction> KeyCodeToDirectionDictionary =
+        new Dictionary<KeyCode, Direction>()
+        {
+            {KeyCode.UpArrow, Direction.Up},
+            {KeyCode.DownArrow, Direction.Down},
+            {KeyCode.RightArrow, Direction.Right},
+            {KeyCode.LeftArrow, Direction.Left}
+        };
+
     public static Dictionary<Direction, Vector3> directionToVectorDictionary =
         new Dictionary<Direction, Vector3>()
         {
@@ -33,6 +41,11 @@ static class DirectionMethods {
 
     public static KeyCode GetKeyCode(this Direction direction) {
         return directionToKeyCodeDictionary[direction];
+    }
+
+    public static Direction GetDirection(this KeyCode keyCode)
+    {
+        return KeyCodeToDirectionDictionary[keyCode];
     }
 
     public static Vector3 GetVector(this Direction direction) {

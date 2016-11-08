@@ -1,6 +1,7 @@
 ﻿using System;
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 
 public class Player : SuckerbanObject
 {
@@ -32,7 +33,7 @@ public class Player : SuckerbanObject
 	    }
 
         // Process keys when not moving
-        if (!isMoving) { 
+        if (!isMoving && pushedKeyQueue.Any()) {
 	        KeyCode pushedKeyCode = pushedKeyQueue.Dequeue();
 	        Direction direction = pushedKeyCode.GetDirection();
             push(direction);

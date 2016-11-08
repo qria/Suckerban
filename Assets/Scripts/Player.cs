@@ -12,7 +12,7 @@ public class Player : SuckerbanObject
     // Constants 
     private Array AllDirections = Enum.GetValues(typeof(Direction));
 
-    void Awake () {
+    protected override void AwakeInitialize() {
         transform = GetComponent<Transform>();
         level = FindObjectOfType<LevelManager>();
         level.Add(this);

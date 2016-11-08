@@ -4,7 +4,7 @@ using System.Collections.Generic;
 public class Triangle : SuckerbanObject {
     private BoxCollider2D collider;
 
-    void Awake() {
+    protected override void AwakeInitialize() {
         transform = GetComponent<Transform>();
         level = FindObjectOfType<LevelManager>();
         level.Add(this);

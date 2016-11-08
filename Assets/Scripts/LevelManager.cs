@@ -23,29 +23,13 @@ public class LevelManager : MonoBehaviour
         allObjects.Add(obj);
     }
 
-    public SuckerbanObject GetObjectInPosition(Vector2 position)
+    public SuckerbanObject GetObjectInPosition(IntVector2 position)
     {
         // Return the first object in given position 
-        foreach(SuckerbanObject obj in allObjects)
-        {
-            if (obj.localPositions.Count <= 1)
-            {
-                if ((Vector2) obj.transform.position == position)
-                {
-                    return obj;
-                }
+        foreach(SuckerbanObject obj in allObjects) {
+            if (obj.positions.Contains(position)) {
+                return obj;
             }
-            else
-            {
-                foreach (Vector2 localPosition in obj.localPositions)
-                {
-                    if ((Vector2) obj.transform.position + localPosition == position)
-                    {
-                        return obj;
-                    }
-                }
-            }
-           
         }
         return null;
     }

@@ -11,6 +11,7 @@ public class LevelManager : MonoBehaviour
     private AudioSource audio;
     public Player currentPlayer;
     public GameObject gameOverScreen;
+    public string NextLevelName;
 
     public List<Mission> missions = new List<Mission>();
 
@@ -23,13 +24,21 @@ public class LevelManager : MonoBehaviour
 	void Update () {
         // Check if all missions are acomplished
         if (missions.All(mission => mission())) {
-            Debug.Log("YOU WON");
+            // TODO: Show congratz screen here
+
+            // Go to next level
+            LoadNextLevel();
         }
 
         // Restart current scene
         if (Input.GetKeyDown(KeyCode.R)) {
             Scene currentScene = SceneManager.GetActiveScene();
             SceneManager.LoadScene(currentScene.buildIndex);
+        }
+
+        // Cheat to get to next level
+        if (Input.GetKeyDown(KeyCode.F1)) {
+            LoadNextLevel();
         }
     }
 
@@ -40,6 +49,10 @@ public class LevelManager : MonoBehaviour
 
     public void AddMission(Mission mission) {
         missions.Add(mission);
+    }
+
+    public void LoadNextLevel() {
+        SceneManager.LoadScene(NextLevelName);
     }
 
     public SuckerbanObject GetObjectInPosition(IntVector2 position)

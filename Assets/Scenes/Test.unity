@@ -1218,8 +1218,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: fd9191ae9ea6130478b8056ae1dcb9b3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  currentPlayer: {fileID: 0}
+  currentPlayer: {fileID: 581851954}
   gameOverScreen: {fileID: 771495897}
+  NextLevelName: World0Level1
 --- !u!4 &642269639
 Transform:
   m_ObjectHideFlags: 0

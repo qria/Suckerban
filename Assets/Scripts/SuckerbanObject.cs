@@ -108,7 +108,7 @@ public class SuckerbanObject : MonoBehaviour {
             IntVector2 positionInFront = sub_position + (IntVector2)direction.GetIntVector2();
             SuckerbanObject objInFront = level.GetObjectInPosition(positionInFront);
             if (objInFront != null && objInFront != this) {
-                if (direction == Direction.Down && (this is Player) && (objInFront is Triangle)) { 
+                if (direction == Direction.Down && (this is Player) && (objInFront is Spike)) { 
                     // If facing spike can't push
                     continue;
                 }

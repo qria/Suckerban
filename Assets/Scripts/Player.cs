@@ -37,6 +37,11 @@ public class Player : SuckerbanObject
 	        KeyCode pushedKeyCode = pushedKeyQueue.Dequeue();
 	        Direction direction = pushedKeyCode.GetDirection();
             push(direction);
-	    }
+        }
+
+        // Bomb and do stuff
+        if (Input.GetKeyDown(KeyCode.Escape)) {
+            level.gameOver();
+        }
     }
 }

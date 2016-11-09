@@ -1,5 +1,6 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
+using UnityEngine.SceneManagement;
 
 public class LevelManager : MonoBehaviour
 {
@@ -15,8 +16,13 @@ public class LevelManager : MonoBehaviour
     }
     
 	void Update () {
-	    // Check goal here sometime later
-	}
+
+        // Restart current scene
+        if (Input.GetKeyDown(KeyCode.R)) {
+            Scene currentScene = SceneManager.GetActiveScene();
+            SceneManager.LoadScene(currentScene.buildIndex);
+        }
+    }
 
     public void Add(SuckerbanObject obj)
     {

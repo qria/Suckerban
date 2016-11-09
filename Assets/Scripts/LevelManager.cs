@@ -1,6 +1,9 @@
 ﻿using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
+using System.Linq;
+
+public delegate bool Mission();
 
 public class LevelManager : MonoBehaviour
 {
@@ -9,6 +12,8 @@ public class LevelManager : MonoBehaviour
     public Player currentPlayer;
     public GameObject gameOverScreen;
 
+    public List<Mission> missions = new List<Mission>();
+
     void Awake()
     {
         audio = GetComponent<AudioSource>();
@@ -16,6 +21,10 @@ public class LevelManager : MonoBehaviour
     }
     
 	void Update () {
+        // Check if all missions are acomplished
+        if (missions.All(mission => mission())) {
+            Debug.Log("YOU WON");
+        }
 
         // Restart current scene
         if (Input.GetKeyDown(KeyCode.R)) {
@@ -27,6 +36,10 @@ public class LevelManager : MonoBehaviour
     public void Add(SuckerbanObject obj)
     {
         allObjects.Add(obj);
+    }
+
+    public void AddMission(Mission mission) {
+        missions.Add(mission);
     }
 
     public SuckerbanObject GetObjectInPosition(IntVector2 position)

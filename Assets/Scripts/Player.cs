@@ -18,10 +18,10 @@ public class Player : SuckerbanObject
     private Queue<KeyCode> pushedKeyQueue; // Note: Only deals with direction keys right now
     
     // For bomberman
-    public int bombCount = 0; // How many bombs I've got
-    public float bombFuse = 0.5f; // How fast bomb goes BOOM
-    public int bombLength = 3 ; // How long the tail of bomb is
-    public bool isAtomicBomb = false;
+    public int bombCount; // How many bombs I've got
+    public float bombFuse; // How fast bomb goes BOOM
+    public int bombLength; // How long the tail of bomb is
+    public bool isAtomicBomb;
 
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
@@ -31,6 +31,11 @@ public class Player : SuckerbanObject
         pushedKeyQueue = new Queue<KeyCode>();
 
         isPushable = true;
+
+        bombCount = 0;
+        bombFuse = 0.75f;
+        bombLength = 3;
+        isAtomicBomb = false;
     }
 	
 	protected override void UpdateInput ()

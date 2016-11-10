@@ -11,3 +11,5 @@ EditorBuildSettings:
     path: Assets/Scenes/World0Level1.unity
   - enabled: 1
     path: Assets/Scenes/World1Level1.unity
+  - enabled: 1
+    path: Assets/Scenes/World0Level2.unity

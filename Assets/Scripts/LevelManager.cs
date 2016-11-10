@@ -8,16 +8,20 @@ public delegate bool Mission();
 public class LevelManager : MonoBehaviour
 {
     private List<SuckerbanObject> allObjectsOnGrid = new List<SuckerbanObject>();
-    private AudioSource audio;
+    private AudioSource BGM;
+    private AudioSource DeathSound;
     public Player currentPlayer;
     public GameObject gameOverScreen;
     public string NextLevelName;
 
     public List<Mission> missions = new List<Mission>();
 
-    void Awake()
-    {
-        audio = GetComponent<AudioSource>();
+    void Awake() {
+        AudioSource[] Audios = GetComponents<AudioSource>();
+        DeathSound = Audios[0];
+        BGM = Audios[1];
+        Debug.Log(BGM);
+        Debug.Log(DeathSound);
         gameOverScreen.SetActive(false);
     }
     
@@ -69,10 +73,9 @@ public class LevelManager : MonoBehaviour
         return null;
     }
 
-    public void gameOver()
-    {
-        Debug.Log("YOU DIED");
-        audio.Play();
+    public void gameOver() {
+        BGM.Stop();
+        DeathSound.Play();
         gameOverScreen.SetActive(true);
         Destroy(currentPlayer.transform.gameObject);
     }

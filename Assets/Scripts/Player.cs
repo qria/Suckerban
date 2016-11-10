@@ -20,6 +20,8 @@ public class Player : SuckerbanObject
 
         collider = GetComponent<BoxCollider2D>();
         pushedKeyQueue = new Queue<KeyCode>();
+
+        isPushable = true;
     }
 	
 	protected override void UpdateInput ()

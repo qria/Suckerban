@@ -10,5 +10,7 @@ public class Wall : SuckerbanObject{
         {
             localPositions.Add(childWall.transform.localPosition.ToIntVector2());
         }
+
+        isPushable = true;
     }
 }

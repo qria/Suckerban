@@ -22,7 +22,7 @@ public class SuckerbanObject : MonoBehaviour {
     // Note that this is relative position to avoid uncessary updates
     public List<IntVector2> positions {
         get {
-            if (localPositions.Count <= 1) {
+            if (localPositions.Count <= 0) {
                 return new List<IntVector2> {position};
             }
             // For Walls
@@ -31,6 +31,8 @@ public class SuckerbanObject : MonoBehaviour {
         }
     }
     
+    public bool isPushable = false; // Set this to true if you want it to be pushable
+
     // For movements
     protected bool isMoving = false;
     protected float remainingMoveDistance;
@@ -89,35 +91,58 @@ public class SuckerbanObject : MonoBehaviour {
         remainingMoveDistance = distance;
         moveDirection = direction;
     }
-    
-    public virtual void push(Direction direction, List<SuckerbanObject> alreadyPushedObjects=null) {
-        // Difference between push and move is that
-        // move just moves it and push propagates it
 
-        alreadyPushedObjects = alreadyPushedObjects ?? new List<SuckerbanObject>(); // Dynamic parameter 
-
-        // Use alreadyPushedObjects to circumvent recursions
-        if (alreadyPushedObjects.Contains(this)) {
+    public virtual void push(Direction direction) {
+        // Pushing success! Proceeding to move
+        List<SuckerbanObject> alreadyPushedObjects = new List<SuckerbanObject>();
+        bool pushSuccess = checkPushable(direction, alreadyPushedObjects);
+        if (!pushSuccess) {
+            // Push failed. Bail out!
             return;
         }
-        alreadyPushedObjects.Add(this);
+        foreach (SuckerbanObject obj in alreadyPushedObjects) {
+            obj.position += direction.GetIntVector2();
+            obj.startMovingAnimation(direction);
+        }
+    }
+    
+    public virtual bool checkPushable(Direction direction, List<SuckerbanObject> alreadyPushedObjects) {
+        // Check if pushable and calculate what objects should be pushed.
+        // returns True if pushable
         
+        // To circumvent recursions
+        if (alreadyPushedObjects.Contains(this)) {
+            return true;
+        }
+        alreadyPushedObjects.Add(this);
+
         
         foreach (IntVector2 sub_position in positions)
         {
             IntVector2 positionInFront = sub_position + (IntVector2)direction.GetIntVector2();
             SuckerbanObject objInFront = level.GetObjectInPosition(positionInFront);
-            if (objInFront != null && objInFront != this) {
-                if (direction == Direction.Down && (this is Player) && (objInFront is Spike)) { 
-                    // If facing spike can't push
-                    continue;
-                }
-                objInFront.push(direction, alreadyPushedObjects);
+            if (objInFront == null) {
+                // There's nothing in front
+                continue;
+            }
+            if (!objInFront.isPushable) {
+                // Unpushable object is in front
+                return false;
+            }
+            if (objInFront == this) {
+                // Ignore if it's me
+                continue;
+            }
+            if (direction == Direction.Down && (this is Player) && (objInFront is Spike)) { 
+                // If facing spike can't push
+                continue;
+            }
+
+            bool pushSuccess = objInFront.checkPushable(direction, alreadyPushedObjects);
+            if (!pushSuccess) {
+                return false; // Propagate failness
             }
         }
-
-        // Pushing success! Proceeding to move
-        position += direction.GetIntVector2();
-        startMovingAnimation(direction);
+        return true;
     }
 }

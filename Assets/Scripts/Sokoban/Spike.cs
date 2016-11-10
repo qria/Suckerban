@@ -9,6 +9,8 @@ public class Spike : SuckerbanObject {
         level.Add(this);
 
         collider = GetComponent<BoxCollider2D>();
+
+        isPushable = true;
     }
 
     void OnTriggerEnter2D(Collider2D other)

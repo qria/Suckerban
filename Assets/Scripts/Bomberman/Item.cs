@@ -14,7 +14,20 @@ public class Item : SuckerbanObject {
 
     public static Object prefab;
     public static Item Create(IntVector2 position, ItemTypes itemType) {
-        prefab = Resources.Load("Prefabs/BombItem");
+        switch (itemType) {
+            case ItemTypes.Bomb:
+                prefab = Resources.Load("Prefabs/BombItem");
+                break;
+            case ItemTypes.SpeedUp:
+                prefab = Resources.Load("Prefabs/SpeedUpItem");
+                break;
+            case ItemTypes.SpeedDown:
+                prefab = Resources.Load("Prefabs/SpeedDownItem");
+                break;
+            case ItemTypes.AtomicBomb:
+                prefab = Resources.Load("Prefabs/AtomicBombItem");
+                break;
+        }
         GameObject newObject = Instantiate(prefab) as GameObject;
         Item item = newObject.GetComponent<Item>();
         item.position = position;

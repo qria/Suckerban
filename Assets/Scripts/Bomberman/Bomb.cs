@@ -44,6 +44,7 @@ public class Bomb : SuckerbanObject {
                 }
                 if (obj is BrickWall) {
                     ((BrickWall)obj).Destroy();
+                    break;
                 }
                 BombFlame.Create(positionToFlame, 0.5f);
             }

@@ -20,8 +20,6 @@ public class LevelManager : MonoBehaviour
         AudioSource[] Audios = GetComponents<AudioSource>();
         DeathSound = Audios[0];
         BGM = Audios[1];
-        Debug.Log(BGM);
-        Debug.Log(DeathSound);
         gameOverScreen.SetActive(false);
     }
     

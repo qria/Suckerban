@@ -17,7 +17,7 @@ public class BrickWall : SuckerbanObject {
     public void Destroy() {
         // Not to be confused with Destroy(GameObject)
 
-        Item.Create(position, ItemTypes.Bomb);
+        Item.Create(position, itemInside);
         Destroy(transform.gameObject);
     }
 }

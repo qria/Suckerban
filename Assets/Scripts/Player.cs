@@ -2,6 +2,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Mono.Security.Cryptography;
 
 public enum ItemTypes {
     Bomb,
@@ -18,8 +19,9 @@ public class Player : SuckerbanObject
     
     // For bomberman
     public int bombCount = 0; // How many bombs I've got
-    public float bombFuse = 1; // How fast bomb goes BOOM
+    public float bombFuse = 0.5f; // How fast bomb goes BOOM
     public int bombLength = 3 ; // How long the tail of bomb is
+    public bool isAtomicBomb = false;
 
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
@@ -56,15 +58,29 @@ public class Player : SuckerbanObject
         // Action Key
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
-                bombCount -= 0;
+                bombCount -= 1;
                 Bomb.Create(position, bombFuse, bombLength);
             }
         }
     }
 
     public void gainItem(ItemTypes itemType) {
-        if (itemType == ItemTypes.Bomb) {
-            bombCount += 1;
+        // When eating bomberman items.
+        switch (itemType) {
+            case ItemTypes.Bomb:
+                bombCount += 1;
+                break;
+            case ItemTypes.SpeedUp:
+                moveSpeed *= 2;
+                bombFuse /= 2;
+                break;
+            case ItemTypes.SpeedDown:
+                moveSpeed /= 2;
+                bombFuse *= 2;
+                break;
+            case ItemTypes.AtomicBomb:
+                isAtomicBomb = true;
+                break;
         }
     }
 }

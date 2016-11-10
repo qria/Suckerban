@@ -37,8 +37,12 @@ public class Bomb : SuckerbanObject {
         BombFlame.Create(position, 0.5f);
         foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
             for (int l = 1; l < bombLength + 1; l++) {
-                Debug.Log(position + direction.GetIntVector2() * l);
-                BombFlame.Create(position + direction.GetIntVector2() * l, 0.5f);
+                IntVector2 positionToFlame = position + direction.GetIntVector2()*l;
+                SuckerbanObject obj = level.GetObjectInPosition(positionToFlame);
+                if (obj is SteelWall) {
+                    break;
+                }
+                BombFlame.Create(positionToFlame, 0.5f);
             }
         }
         Destroy(transform.gameObject);

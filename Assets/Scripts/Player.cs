@@ -3,6 +3,13 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 
+public enum ItemTypes {
+    Bomb,
+    AtomicBomb,
+    SpeedUp,
+    SpeedDown
+}
+
 public class Player : SuckerbanObject
 {
     // Components
@@ -13,9 +20,7 @@ public class Player : SuckerbanObject
     private Array AllDirections = Enum.GetValues(typeof(Direction));
 
     protected override void AwakeInitialize() {
-        transform = GetComponent<Transform>();
-        level = FindObjectOfType<LevelManager>();
-        level.Add(this);
+        level.PlaceOnGrid(this);
         level.currentPlayer = this;
 
         collider = GetComponent<BoxCollider2D>();
@@ -45,5 +50,9 @@ public class Player : SuckerbanObject
         if (Input.GetKeyDown(KeyCode.Escape)) {
             level.gameOver();
         }
+    }
+
+    public void gainItem(ItemTypes itemType) {
+        
     }
 }

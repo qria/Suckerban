@@ -43,7 +43,9 @@ public class SuckerbanObject : MonoBehaviour {
         // Override `AwakeInitialize()` to use `Awake()`
         // It is strongly encouraged not to use  `Awake()` in children class
         // There might be a better way to deal with subclassing and Awake.
-        
+
+        transform = GetComponent<Transform>();
+        level = FindObjectOfType<LevelManager>();
         AwakeInitialize();
         position = new IntVector2(
             Convert.ToInt32(transform.position.x),

@@ -4,9 +4,7 @@ public class Spike : SuckerbanObject {
     private BoxCollider2D collider;
 
     protected override void AwakeInitialize() {
-        transform = GetComponent<Transform>();
-        level = FindObjectOfType<LevelManager>();
-        level.Add(this);
+        level.PlaceOnGrid(this);
 
         collider = GetComponent<BoxCollider2D>();
 

@@ -7,7 +7,7 @@ public delegate bool Mission();
 
 public class LevelManager : MonoBehaviour
 {
-    private List<SuckerbanObject> allObjects = new List<SuckerbanObject>();
+    private List<SuckerbanObject> allObjectsOnGrid = new List<SuckerbanObject>();
     private AudioSource audio;
     public Player currentPlayer;
     public GameObject gameOverScreen;
@@ -42,9 +42,9 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void Add(SuckerbanObject obj)
+    public void PlaceOnGrid(SuckerbanObject obj)
     {
-        allObjects.Add(obj);
+        allObjectsOnGrid.Add(obj);
     }
 
     public void AddMission(Mission mission) {
@@ -58,7 +58,7 @@ public class LevelManager : MonoBehaviour
     public SuckerbanObject GetObjectInPosition(IntVector2 position)
     {
         // Return the first object in given position 
-        foreach(SuckerbanObject obj in allObjects) {
+        foreach(SuckerbanObject obj in allObjectsOnGrid) {
             if (obj.positions.Contains(position)) {
                 return obj;
             }

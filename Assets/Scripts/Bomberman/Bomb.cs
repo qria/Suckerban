@@ -1,9 +1,11 @@
-﻿using UnityEngine;
-using System.Collections;
+﻿using System;
+using UnityEngine;
+using Object = UnityEngine.Object;
 
 public class Bomb : SuckerbanObject {
 
     public float fuse; // Time until it goes BOOM
+    public int bombLength;
 
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
@@ -12,13 +14,14 @@ public class Bomb : SuckerbanObject {
     }
 
     public static Object prefab;
-    public static Bomb Create(IntVector2 position, float fuse) {
+    public static Bomb Create(IntVector2 position, float fuse, int bombLength) {
         prefab = Resources.Load("Prefabs/Bomb");
         GameObject newObject = Instantiate(prefab) as GameObject;
         Bomb bomb = newObject.GetComponent<Bomb>();
         bomb.position = position;
         bomb.transform.position = position.ToVector2();
         bomb.fuse = fuse;
+        bomb.bombLength = bombLength;
 
         return bomb;
     }
@@ -31,6 +34,13 @@ public class Bomb : SuckerbanObject {
     }
 
     public void Explode() {
+        BombFlame.Create(position, 0.5f);
+        foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
+            for (int l = 1; l < bombLength + 1; l++) {
+                Debug.Log(position + direction.GetIntVector2() * l);
+                BombFlame.Create(position + direction.GetIntVector2() * l, 0.5f);
+            }
+        }
         Destroy(transform.gameObject);
     }
 }

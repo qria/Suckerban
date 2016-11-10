@@ -20,6 +20,9 @@ public struct IntVector2 {
     public static IntVector2 operator +(IntVector2 v1, IntVector2 v2) {
         return new IntVector2(v1.x + v2.x, v1.y + v2.y);
     }
+    public static IntVector2 operator *(IntVector2 v, int n) {
+        return new IntVector2(v.x * n, v.y * n);
+    }
 }
 
 public static class IntVector2Extensions {

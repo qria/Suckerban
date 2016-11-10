@@ -1,5 +1,7 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
+using System.Runtime.Remoting.Messaging;
 
 public enum Direction {
     Up, Down, Left, Right
@@ -63,5 +65,9 @@ static class DirectionMethods {
 
     public static IntVector2 GetIntVector2(this Direction direction) {
         return directionToIntVector2Dictionary[direction];
+    }
+    
+    public static Array All(this Direction direction){
+        return Enum.GetValues(typeof(Direction));
     }
 }

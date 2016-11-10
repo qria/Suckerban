@@ -3892,7 +3892,7 @@ Prefab:
     - target: {fileID: 114000012329998024, guid: bc1c4ec8463df8e42bdfadccd4f2d0d0,
         type: 2}
       propertyPath: itemInside
-      value: 0
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1000011520112534, guid: bc1c4ec8463df8e42bdfadccd4f2d0d0, type: 2}
       propertyPath: m_Name

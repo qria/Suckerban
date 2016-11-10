@@ -19,6 +19,10 @@ public class Player : SuckerbanObject
     // Constants 
     private Array AllDirections = Enum.GetValues(typeof(Direction));
 
+    // For bomberman
+    public int bombCount = 0; // How many bombs I've got
+    public float bombFuse = 1; // How fast bomb goes BOOM
+
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
         level.currentPlayer = this;
@@ -46,13 +50,23 @@ public class Player : SuckerbanObject
             push(direction);
         }
 
-        // Bomb and do stuff
+        // Suicide
         if (Input.GetKeyDown(KeyCode.Escape)) {
             level.gameOver();
+        }
+
+        // Action Key
+        if (Input.GetKeyDown(KeyCode.Space)) {
+            if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
+                bombCount -= 0;
+                Bomb.Create(position, bombFuse);
+            }
         }
     }
 
     public void gainItem(ItemTypes itemType) {
-        
+        if (itemType == ItemTypes.Bomb) {
+            bombCount += 1;
+        }
     }
 }

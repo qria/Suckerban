@@ -42,9 +42,12 @@ public class LevelManager : MonoBehaviour
         }
     }
 
-    public void PlaceOnGrid(SuckerbanObject obj)
-    {
+    public void PlaceOnGrid(SuckerbanObject obj) {
         allObjectsOnGrid.Add(obj);
+    }
+
+    public bool RemoveFromGrid(SuckerbanObject obj) {
+        return allObjectsOnGrid.Remove(obj);
     }
 
     public void AddMission(Mission mission) {

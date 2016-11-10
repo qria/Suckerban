@@ -39,6 +39,7 @@ public class SuckerbanObject : MonoBehaviour {
     public float moveSpeed = 6f;
     protected Direction moveDirection;
 
+
     void Awake() {
         // Override `AwakeInitialize()` to use `Awake()`
         // It is strongly encouraged not to use  `Awake()` in children class
@@ -62,6 +63,7 @@ public class SuckerbanObject : MonoBehaviour {
         // It is strongly encouraged not to use `Update()` in children class
         UpdateMoveAnimation();
         UpdateInput();
+        UpdateLogic();
     }
 
     protected virtual void UpdateMoveAnimation() {
@@ -87,6 +89,13 @@ public class SuckerbanObject : MonoBehaviour {
         // Update function that handles inputs
     }
 
+    protected virtual void UpdateLogic() {
+        // Update function that handles rest of the logics
+    }
+
+    void OnDestroy() {
+        level.RemoveFromGrid(this);
+    }
 
     protected void startMovingAnimation(Direction direction, float distance=1f) {
         isMoving = true;

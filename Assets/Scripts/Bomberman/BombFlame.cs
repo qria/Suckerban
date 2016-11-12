@@ -36,7 +36,6 @@ public class BombFlame : SuckerbanObject {
             level.gameOver();
         }
         if (other.CompareTag("BombermanItem")) {
-            Debug.Log("hi");
             Destroy(other.gameObject);
         }
     }

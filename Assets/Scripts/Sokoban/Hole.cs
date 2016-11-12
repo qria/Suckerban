@@ -8,6 +8,11 @@ public class Hole : MonoBehaviour { // Not SuckerbanObject... not sure if correc
     public IntVector2 position; 
     public Mission fillHoleMission;
 
+    public enum FillerType {
+        Spike, YellowBall
+    }
+    public FillerType fillerType; // Which filler to use with this hole
+
     void Awake() {
         transform = GetComponent<Transform>();
         fillHoleMission = new Mission(isFilled);
@@ -21,8 +26,13 @@ public class Hole : MonoBehaviour { // Not SuckerbanObject... not sure if correc
     }
 
     public bool isFilled() {
-        // Mission for 
-        return level.GetObjectInPosition(position) is Spike;
+        switch (fillerType) {
+            case FillerType.Spike:
+                return level.GetObjectInPosition(position) is Spike;
+            case FillerType.YellowBall:
+                return level.GetObjectInPosition(position) is BombermanBall;
+        }
+        return false;
     }
 
 }

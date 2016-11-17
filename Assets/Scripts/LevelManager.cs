@@ -34,8 +34,7 @@ public class LevelManager : MonoBehaviour
 
         // Restart current scene
         if (Input.GetKeyDown(KeyCode.R)) {
-            Scene currentScene = SceneManager.GetActiveScene();
-            SceneManager.LoadScene(currentScene.buildIndex);
+            RestartLevel();
         }
 
         // Cheat to get to next level
@@ -54,6 +53,11 @@ public class LevelManager : MonoBehaviour
 
     public void AddMission(Mission mission) {
         missions.Add(mission);
+    }
+    
+    public void RestartLevel() {
+        Scene currentScene = SceneManager.GetActiveScene();
+        SceneManager.LoadScene(currentScene.buildIndex);
     }
 
     public void LoadNextLevel() {
@@ -76,5 +80,12 @@ public class LevelManager : MonoBehaviour
         DeathSound.Play();
         gameOverScreen.SetActive(true);
         Destroy(currentPlayer.transform.gameObject);
+
+        // Tap to restart level. Mostly for mobile
+        var recognizer = new TKTapRecognizer();
+        recognizer.gestureRecognizedEvent += (r) => {
+            RestartLevel();
+        };
+        TouchKit.addGestureRecognizer(recognizer);
     }
 }

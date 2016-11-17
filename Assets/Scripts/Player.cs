@@ -36,6 +36,33 @@ public class Player : SuckerbanObject
         bombFuse = 0.75f;
         bombLength = 3;
         isAtomicBomb = false;
+
+        // Simulate keypress when swiped
+        var swipeRecognizer = new TKSwipeRecognizer();
+        swipeRecognizer.gestureRecognizedEvent += (r) =>
+        {
+            if (r.completedSwipeDirection == TKSwipeDirection.Up) {
+                pushedKeyQueue.Enqueue(KeyCode.UpArrow);
+            }
+            if (r.completedSwipeDirection == TKSwipeDirection.Down) {
+                pushedKeyQueue.Enqueue(KeyCode.DownArrow);
+            }
+            if (r.completedSwipeDirection == TKSwipeDirection.Right) {
+                pushedKeyQueue.Enqueue(KeyCode.RightArrow);
+            }
+            if (r.completedSwipeDirection == TKSwipeDirection.Left) {
+                pushedKeyQueue.Enqueue(KeyCode.LeftArrow);
+            }
+        };
+        TouchKit.addGestureRecognizer(swipeRecognizer);
+
+        // Place Bomb
+        // TODO: change this to just pressing space, not directly placing bomb.
+        var tapRecognizer = new TKTapRecognizer();
+        tapRecognizer.gestureRecognizedEvent += (r) => {
+            placeBomb();
+        };
+        TouchKit.addGestureRecognizer(tapRecognizer);
     }
 	
 	protected override void UpdateInput ()
@@ -62,10 +89,7 @@ public class Player : SuckerbanObject
 
         // Action Key
         if (Input.GetKeyDown(KeyCode.Space)) {
-            if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
-                bombCount -= 1;
-                Bomb.Create(position, bombFuse, bombLength);
-            }
+            placeBomb();
         }
     }
 
@@ -86,6 +110,13 @@ public class Player : SuckerbanObject
             case ItemTypes.AtomicBomb:
                 isAtomicBomb = true;
                 break;
+        }
+    }
+
+    public void placeBomb() {
+        if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
+            bombCount -= 1;
+            Bomb.Create(position, bombFuse, bombLength);
         }
     }
 }

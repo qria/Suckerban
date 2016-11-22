@@ -42,6 +42,11 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
     public event System.Action<TKSwipeRecognizer> gestureRecognizedEvent;
 
     /// <summary>
+    /// The event that fires when the finger is lifted and a swipe was recognized.
+    /// </summary>
+    public event System.Action<TKSwipeRecognizer> gestureCompleteEvent; 
+
+    /// <summary>
     /// The maximum amount of time for the motion to be considered a swipe.
     /// Setting to 0f will disable the time restriction completely.
     /// </summary>
@@ -222,7 +227,7 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 
             // if we're triggering when the criteria is met, then check for completion every frame
             if (triggerWhenCriteriaMet && checkForSwipeCompletion(touches[0]))
-                state = TKGestureRecognizerState.Recognized;
+                state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
         }
     }
 
@@ -235,9 +240,16 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 
             // last frame, one last check- recognized or fail
             if (checkForSwipeCompletion(touches[0]))
-                state = TKGestureRecognizerState.Recognized;
+                state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
             else
                 state = TKGestureRecognizerState.FailedOrEnded;
+        }
+        
+        // if succesfully recognized
+        if (state == TKGestureRecognizerState.RecognizedAndStillRecognizing && gestureCompleteEvent != null) 
+        {
+            gestureCompleteEvent(this);
+            state = TKGestureRecognizerState.FailedOrEnded;
         }
     }
 

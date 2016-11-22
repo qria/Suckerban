@@ -16,12 +16,18 @@ public class Player : SuckerbanObject
     // Components
     private BoxCollider2D collider;
     private Queue<KeyCode> pushedKeyQueue; // Note: Only deals with direction keys right now
-    
+    private TKSwipeRecognizer swipeRecognizer;
+    private bool isBeingSwiped;
+    private TKTapRecognizer tapRecognizer;
+
     // For bomberman
     public int bombCount; // How many bombs I've got
     public float bombFuse; // How fast bomb goes BOOM
     public int bombLength; // How long the tail of bomb is
     public bool isAtomicBomb;
+
+    // Constants? May need to organize it with global constants
+    public float swipeRecognizeDistance = 0.1f; // in cm
 
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
@@ -38,27 +44,20 @@ public class Player : SuckerbanObject
         isAtomicBomb = false;
 
         // Simulate keypress when swiped
-        var swipeRecognizer = new TKSwipeRecognizer();
-        swipeRecognizer.gestureRecognizedEvent += (r) =>
-        {
-            if (r.completedSwipeDirection == TKSwipeDirection.Up) {
-                pushedKeyQueue.Enqueue(KeyCode.UpArrow);
-            }
-            if (r.completedSwipeDirection == TKSwipeDirection.Down) {
-                pushedKeyQueue.Enqueue(KeyCode.DownArrow);
-            }
-            if (r.completedSwipeDirection == TKSwipeDirection.Right) {
-                pushedKeyQueue.Enqueue(KeyCode.RightArrow);
-            }
-            if (r.completedSwipeDirection == TKSwipeDirection.Left) {
-                pushedKeyQueue.Enqueue(KeyCode.LeftArrow);
-            }
+        swipeRecognizer = new TKSwipeRecognizer(swipeRecognizeDistance);
+        swipeRecognizer.gestureRecognizedEvent += (r) => {
+            // Since we need to do something Every frame, not just the frame this event gets called,
+            // The logic needs to be in Update(), not here.
+            isBeingSwiped = true; 
+        };
+        swipeRecognizer.gestureCompleteEvent += (r) => {
+            isBeingSwiped = false;
         };
         TouchKit.addGestureRecognizer(swipeRecognizer);
-
+        
         // Place Bomb
         // TODO: change this to just pressing space, not directly placing bomb.
-        var tapRecognizer = new TKTapRecognizer();
+        tapRecognizer = new TKTapRecognizer();
         tapRecognizer.gestureRecognizedEvent += (r) => {
             placeBomb();
         };
@@ -67,8 +66,22 @@ public class Player : SuckerbanObject
 	
 	protected override void UpdateInput ()
     {
+	    if (isBeingSwiped && !isMoving) {
+            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Up) {
+                pushedKeyQueue.Enqueue(KeyCode.UpArrow);
+            }
+            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Down) {
+                pushedKeyQueue.Enqueue(KeyCode.DownArrow);
+            }
+            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Right) {
+                pushedKeyQueue.Enqueue(KeyCode.RightArrow);
+            }
+            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Left) {
+                pushedKeyQueue.Enqueue(KeyCode.LeftArrow);
+            }
+        }
         // Queue up direction keys
-	    foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
+        foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
 	        KeyCode keyCode = direction.GetKeyCode();
             if (Input.GetKeyDown(keyCode)) {
 	            pushedKeyQueue.Enqueue(keyCode);

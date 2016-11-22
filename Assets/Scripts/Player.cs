@@ -15,7 +15,6 @@ public class Player : SuckerbanObject
 {
     // Components
     private BoxCollider2D collider;
-    private Queue<KeyCode> pushedKeyQueue; // Note: Only deals with direction keys right now
     private TKSwipeRecognizer swipeRecognizer;
     private bool isBeingSwiped;
     private TKTapRecognizer tapRecognizer;
@@ -34,7 +33,6 @@ public class Player : SuckerbanObject
         level.currentPlayer = this;
 
         collider = GetComponent<BoxCollider2D>();
-        pushedKeyQueue = new Queue<KeyCode>();
 
         isPushable = true;
 
@@ -56,53 +54,40 @@ public class Player : SuckerbanObject
         TouchKit.addGestureRecognizer(swipeRecognizer);
         
         // Place Bomb
-        // TODO: change this to just pressing space, not directly placing bomb.
         tapRecognizer = new TKTapRecognizer();
         tapRecognizer.gestureRecognizedEvent += (r) => {
-            placeBomb();
+            action();
         };
         TouchKit.addGestureRecognizer(tapRecognizer);
     }
 	
 	protected override void UpdateInput ()
     {
+        // Mobile Direction Control
 	    if (isBeingSwiped && !isMoving) {
-            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Up) {
-                pushedKeyQueue.Enqueue(KeyCode.UpArrow);
-            }
-            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Down) {
-                pushedKeyQueue.Enqueue(KeyCode.DownArrow);
-            }
-            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Right) {
-                pushedKeyQueue.Enqueue(KeyCode.RightArrow);
-            }
-            if (swipeRecognizer.completedSwipeDirection == TKSwipeDirection.Left) {
-                pushedKeyQueue.Enqueue(KeyCode.LeftArrow);
-            }
-        }
-        // Queue up direction keys
-        foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
-	        KeyCode keyCode = direction.GetKeyCode();
-            if (Input.GetKeyDown(keyCode)) {
-	            pushedKeyQueue.Enqueue(keyCode);
-	        }
-	    }
-
-        // Process keys when not moving
-        if (!isMoving && pushedKeyQueue.Any()) {
-	        KeyCode pushedKeyCode = pushedKeyQueue.Dequeue();
-	        Direction direction = pushedKeyCode.GetDirection();
-            push(direction);
+            push(swipeRecognizer.completedSwipeDirection.ToDirection());
         }
 
-        // Suicide
+        // PC Direction Control
+	    if (!isMoving) {
+            foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
+                KeyCode keyCode = direction.GetKeyCode();
+                if (Input.GetKey(keyCode)) {
+                    push(keyCode.GetDirection());
+                    break; // Only register one direction key per frame.
+                }
+            }
+        }
+        
+        // Suicide (for PC)
         if (Input.GetKeyDown(KeyCode.Escape)) {
             level.gameOver();
         }
 
-        // Action Key
+        // Action Key (for PC)
+        // Mobile Action key control is registered via tapRecognizer
         if (Input.GetKeyDown(KeyCode.Space)) {
-            placeBomb();
+            action();
         }
     }
 
@@ -124,6 +109,11 @@ public class Player : SuckerbanObject
                 isAtomicBomb = true;
                 break;
         }
+    }
+
+    public void action() {
+        // When action key is pressed
+        placeBomb();
     }
 
     public void placeBomb() {

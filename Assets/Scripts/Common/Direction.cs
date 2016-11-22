@@ -49,6 +49,14 @@ static class DirectionMethods {
             {Direction.Left, IntVector2.left}
         };
 
+    public static Dictionary<TKSwipeDirection, Direction> tkSwipeDirectionToDirectionDictionary =
+        new Dictionary<TKSwipeDirection, Direction>()
+        {
+            {TKSwipeDirection.Up, Direction.Up},
+            {TKSwipeDirection.Down, Direction.Down},
+            {TKSwipeDirection.Right, Direction.Right},
+            {TKSwipeDirection.Left, Direction.Left}
+        };
 
     public static KeyCode GetKeyCode(this Direction direction) {
         return directionToKeyCodeDictionary[direction];
@@ -65,6 +73,10 @@ static class DirectionMethods {
 
     public static IntVector2 GetIntVector2(this Direction direction) {
         return directionToIntVector2Dictionary[direction];
+    }
+
+    public static Direction ToDirection(this TKSwipeDirection tkSwipeDirection) {
+        return tkSwipeDirectionToDirectionDictionary[tkSwipeDirection];
     }
     
     public static Array All(this Direction direction){

@@ -17,6 +17,8 @@ public class SuckerbanObject : MonoBehaviour {
      */
     protected Transform transform;
     protected LevelManager level;
+    protected TrapManager trapM;
+
     public IntVector2 position; // DO NOT CONFUSE THIS WITH `transform.position`
     public List<IntVector2> localPositions = new List<IntVector2>(); // If this object is spanned in multiple positions
     // Note that this is relative position to avoid uncessary updates

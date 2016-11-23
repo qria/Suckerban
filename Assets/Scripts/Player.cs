@@ -8,7 +8,8 @@ public enum ItemTypes {
     Bomb,
     AtomicBomb,
     SpeedUp,
-    SpeedDown
+    SpeedDown,
+    None
 }
 
 public class Player : SuckerbanObject
@@ -45,7 +46,8 @@ public class Player : SuckerbanObject
 	        KeyCode keyCode = direction.GetKeyCode();
             if (Input.GetKeyDown(keyCode)) {
 	            pushedKeyQueue.Enqueue(keyCode);
-	        }
+                level.playMoveSound();
+            }
 	    }
 
         // Process keys when not moving
@@ -53,6 +55,7 @@ public class Player : SuckerbanObject
 	        KeyCode pushedKeyCode = pushedKeyQueue.Dequeue();
 	        Direction direction = pushedKeyCode.GetDirection();
             push(direction);
+            //level.playPushSound();
         }
 
         // Suicide
@@ -64,12 +67,15 @@ public class Player : SuckerbanObject
         if (Input.GetKeyDown(KeyCode.Space)) {
             if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
                 bombCount -= 1;
+                level.playSetBombSound();
                 Bomb.Create(position, bombFuse, bombLength);
             }
         }
     }
 
-    public void gainItem(ItemTypes itemType) {
+    public void gainItem(ItemTypes itemType)
+    {
+        level.playItemSound();
         // When eating bomberman items.
         switch (itemType) {
             case ItemTypes.Bomb:

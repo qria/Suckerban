@@ -14,6 +14,13 @@ public class LevelManager : MonoBehaviour
     public GameObject gameOverScreen;
     public string NextLevelName;
 
+
+    private AudioSource ItemSound;
+    private AudioSource MoveSound;
+    private AudioSource PushSound;
+    private AudioSource SetBombSound;
+    private AudioSource BombSound;
+
     public List<Mission> missions = new List<Mission>();
 
     void Awake() {
@@ -21,6 +28,14 @@ public class LevelManager : MonoBehaviour
         DeathSound = Audios[0];
         BGM = Audios[1];
         gameOverScreen.SetActive(false);
+
+
+        MoveSound = Audios[2];
+        PushSound = Audios[3];
+        ItemSound = Audios[4];
+        SetBombSound = Audios[5];
+        BombSound = Audios[6];
+
     }
     
 	void Update () {
@@ -76,5 +91,26 @@ public class LevelManager : MonoBehaviour
         DeathSound.Play();
         gameOverScreen.SetActive(true);
         Destroy(currentPlayer.transform.gameObject);
+    }
+
+    public void playMoveSound()
+    {
+        MoveSound.Play();
+    }
+    public void playPushSound()
+    {
+        PushSound.Play();
+    }
+    public void playItemSound()
+    {
+        ItemSound.Play();
+    }
+    public void playSetBombSound()
+    {
+        SetBombSound.Play();
+    }
+    public void playBombSound()
+    {
+        BombSound.Play();
     }
 }

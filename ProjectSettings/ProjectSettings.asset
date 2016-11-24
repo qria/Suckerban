@@ -6,12 +6,12 @@ PlayerSettings:
   serializedVersion: 8
   productGUID: b17b9762ab234ed4f921626767912f4e
   AndroidProfiler: 0
-  defaultScreenOrientation: 4
+  defaultScreenOrientation: 3
   targetDevice: 2
   useOnDemandResources: 0
   accelerometerFrequency: 60
   companyName: SuckerbanCompany
-  productName: Suckerban
+  productName: SuckerbanTest
   defaultCursor: {fileID: 0}
   cursorHotspot: {x: 0, y: 0}
   m_SplashScreenStyle: 0

@@ -28,8 +28,7 @@ public class LevelManager : MonoBehaviour
         DeathSound = Audios[0];
         BGM = Audios[1];
         gameOverScreen.SetActive(false);
-        
-        Debug.Log(Audios);
+
         MoveSound = Audios[2];
         PushSound = Audios[3];
         ItemSound = Audios[4];
@@ -71,6 +70,7 @@ public class LevelManager : MonoBehaviour
     }
     
     public void RestartLevel() {
+        TouchKit.removeAllGestureRecognizers(); // Remove all recognizers
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }

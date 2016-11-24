@@ -3855,6 +3855,11 @@ Prefab:
       propertyPath: gameOverScreen
       value: 
       objectReference: {fileID: 1682447294}
+    - target: {fileID: 114000010894004538, guid: 35479009df7df174c9ca89ac619e6ed7,
+        type: 2}
+      propertyPath: NextLevelName
+      value: World1Level6
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
   m_IsPrefabParent: 0

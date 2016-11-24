@@ -71,6 +71,7 @@ public class LevelManager : MonoBehaviour
     }
     
     public void RestartLevel() {
+        TouchKit.removeAllGestureRecognizers(); // Remove all recognizers
         Scene currentScene = SceneManager.GetActiveScene();
         SceneManager.LoadScene(currentScene.buildIndex);
     }

@@ -17,6 +17,8 @@ public class SuckerbanObject : MonoBehaviour {
      */
     protected Transform transform;
     protected LevelManager level;
+    protected TrapManager trapM;
+
     public IntVector2 position; // DO NOT CONFUSE THIS WITH `transform.position`
     public List<IntVector2> localPositions = new List<IntVector2>(); // If this object is spanned in multiple positions
     // Note that this is relative position to avoid uncessary updates
@@ -103,18 +105,20 @@ public class SuckerbanObject : MonoBehaviour {
         moveDirection = direction;
     }
 
-    public virtual void push(Direction direction) {
-        // Pushing success! Proceeding to move
+    public virtual bool push(Direction direction) {
         List<SuckerbanObject> alreadyPushedObjects = new List<SuckerbanObject>();
         bool pushSuccess = checkPushable(direction, alreadyPushedObjects);
         if (!pushSuccess) {
             // Push failed. Bail out!
-            return;
+            return false;
         }
+        // Pushing success! Proceeding to move
+
         foreach (SuckerbanObject obj in alreadyPushedObjects) {
             obj.position += direction.GetIntVector2();
             obj.startMovingAnimation(direction);
         }
+        return true;
     }
     
     public virtual bool checkPushable(Direction direction, List<SuckerbanObject> alreadyPushedObjects) {

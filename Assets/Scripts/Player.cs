@@ -8,7 +8,8 @@ public enum ItemTypes {
     Bomb,
     AtomicBomb,
     SpeedUp,
-    SpeedDown
+    SpeedDown,
+    None
 }
 
 public class Player : SuckerbanObject
@@ -73,7 +74,10 @@ public class Player : SuckerbanObject
             foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
                 KeyCode keyCode = direction.GetKeyCode();
                 if (Input.GetKey(keyCode)) {
-                    push(keyCode.GetDirection());
+                    bool pushSuccess = push(keyCode.GetDirection());
+                    if (pushSuccess) { // Only play sound if pushing succeeds
+                        level.playMoveSound();
+                    }
                     break; // Only register one direction key per frame.
                 }
             }
@@ -91,7 +95,9 @@ public class Player : SuckerbanObject
         }
     }
 
-    public void gainItem(ItemTypes itemType) {
+    public void gainItem(ItemTypes itemType)
+    {
+        level.playItemSound();
         // When eating bomberman items.
         switch (itemType) {
             case ItemTypes.Bomb:
@@ -117,6 +123,7 @@ public class Player : SuckerbanObject
     }
 
     public void placeBomb() {
+        level.playSetBombSound();
         if (bombCount > 0 && !(level.GetObjectInPosition(position) is Bomb)) {
             bombCount -= 1;
             Bomb.Create(position, bombFuse, bombLength);

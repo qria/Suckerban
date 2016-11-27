@@ -72,7 +72,11 @@ public class TouchKitLite : MonoBehaviour
 #if UNITY_EDITOR || UNITY_STANDALONE_OSX || UNITY_STANDALONE_WIN || UNITY_WEBPLAYER || UNITY_WEBGL
 
 		// we only need to process if we have some interesting input this frame
-		if( (Input.GetMouseButtonUp( 0 ) || Input.GetMouseButton( 0 )) && !UnityEditor.EditorApplication.isRemoteConnected )
+		if( (Input.GetMouseButtonUp( 0 ) || Input.GetMouseButton( 0 ))
+#if UNITY_EDITOR
+                && !UnityEditor.EditorApplication.isRemoteConnected
+#endif
+                )
 			liveTouches.Add( _touchCache[0].populateFromMouse() );
 
 #endif

@@ -39,7 +39,7 @@ public class LevelManager : MonoBehaviour
     
 	void Update () {
         // Check if all missions are acomplished
-        if (missions.All(mission => mission())) {
+        if (missions.All(mission => mission()) || Input.GetKeyDown(KeyCode.F1)) {
             // TODO: Show congratz screen here
 
             // Go to next level

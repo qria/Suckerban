@@ -704,7 +704,7 @@ Prefab:
     - target: {fileID: 114000011329260242, guid: 415ae1b99a6f2d34db394b8593ff4b98,
         type: 2}
       propertyPath: fuse
-      value: 4.5
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 114000011329260242, guid: 415ae1b99a6f2d34db394b8593ff4b98,
         type: 2}
@@ -2572,34 +2572,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_RootOrder: 51
---- !u!1 &984231505
-GameObject:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 454484182}
-  serializedVersion: 4
-  m_Component:
-  - 4: {fileID: 984231506}
-  m_Layer: 0
-  m_Name: Missing Prefab
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &984231506
-Transform:
-  m_ObjectHideFlags: 0
-  m_PrefabParentObject: {fileID: 0}
-  m_PrefabInternal: {fileID: 454484182}
-  m_GameObject: {fileID: 984231505}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_RootOrder: 49
 --- !u!4 &988207611 stripped
 Transform:
   m_PrefabParentObject: {fileID: 4000012095242610, guid: 3c51ba3fbd1bc7e4b9c43c42b617fcdc,
@@ -2750,7 +2722,7 @@ Prefab:
     - target: {fileID: 114000010894004538, guid: 35479009df7df174c9ca89ac619e6ed7,
         type: 2}
       propertyPath: NextLevelName
-      value: World1Level5
+      value: World1Level6
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}

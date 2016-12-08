@@ -9,19 +9,25 @@ EditorBuildSettings:
     path: Assets/Scenes/Test.unity
   - enabled: 1
     path: Assets/Scenes/World0Level1.unity
-  - enabled: 1
-    path: Assets/Scenes/World1Level1.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World0Level2.unity
-  - enabled: 1
+  - enabled: 0
+    path: Assets/Scenes/World0Level3.unity
+  - enabled: 0
+    path: Assets/Scenes/World0Level4.unity
+  - enabled: 0
+    path: Assets/Scenes/World1Level1.unity
+  - enabled: 0
     path: Assets/Scenes/World1Level2.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1Level3.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1Level4.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1Level5.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1Level6.unity
-  - enabled: 1
+  - enabled: 0
     path: Assets/Scenes/World1Level7.unity
+  - enabled: 0
+    path: Assets/Scenes/World1Level8.unity

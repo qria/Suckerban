@@ -47,6 +47,7 @@ public class Player : SuckerbanObject
         swipeRecognizer.gestureRecognizedEvent += (r) => {
             // Since we need to do something Every frame, not just the frame this event gets called,
             // The logic needs to be in Update(), not here.
+            Debug.Log(r);
             isBeingSwiped = true; 
         };
         swipeRecognizer.gestureCompleteEvent += (r) => {

@@ -2,6 +2,7 @@
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using UnityEngine.UI;
 
 public delegate bool Mission();
 
@@ -13,6 +14,17 @@ public class LevelManager : MonoBehaviour
     public Player currentPlayer;
     public GameObject gameOverScreen;
     public string NextLevelName;
+
+    public GameObject ActionButton;
+
+    private bool _isActionButtonShown;
+    public bool isActionButtonShown {
+        get { return _isActionButtonShown; }
+        set {
+            ActionButton.GetComponent<Image>().enabled = value;
+            _isActionButtonShown = value;
+        }
+    }
 
 
     private AudioSource ItemSound;
@@ -35,6 +47,9 @@ public class LevelManager : MonoBehaviour
         SetBombSound = Audios[5];
         BombSound = Audios[6];
 
+        ActionButton = GameObject.Find("ActionButton");
+        ActionButton.transform.position = new Vector2(100, 100); // Position the button
+        isActionButtonShown = false;
     }
     
 	void Update () {

@@ -1,3 +1,6 @@
+// This is a modified version of the original TKSwipeRecognizer
+
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;
@@ -111,6 +114,9 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
         get { return this._points.FirstOrDefault(); }
     }
 
+    private Vector2 midwayPoint; // reference point for changing direction
+    private int midwayPointIndex; // index for the midway point in `_points`
+
     /// <summary>
     /// The last touch point in the gesture.
     /// </summary>
@@ -131,16 +137,23 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
 
     private bool checkForSwipeCompletion(TKTouch touch)
     {
-        // if we have a time stipulation and we exceeded it stop listening for swipes, fail
-        if (timeToSwipe > 0.0f && (Time.time - this._startTime) > timeToSwipe)
-            return false;
+//        // if we have a time stipulation and we exceeded it stop listening for swipes, fail
+//        if (timeToSwipe > 0.0f && (Time.time - this._startTime) > timeToSwipe)
+//            return false;
 
         // if we don't have at least two points to test yet, then fail
         if (this._points.Count < 2)
             return false;
 
+        if (state != TKGestureRecognizerState.Began && _points.Count > 100) {
+            Debug.Log("HI");
+        }
+        Vector2 referencePoint = (state == TKGestureRecognizerState.Began) ? startPoint : midwayPoint;
+
         // the ideal distance in pixels from the start to the finish
-        float idealDistance = Vector2.Distance(startPoint, endPoint);
+        float idealDistance = Vector2.Distance(referencePoint, endPoint);
+
+        Debug.Log(idealDistance);
 
         // the ideal distance in centimeters, based on the screen pixel density
         float idealDistanceCM = idealDistance / TouchKit.instance.ScreenPixelsPerCm;
@@ -149,43 +162,53 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
         if (idealDistanceCM < this._minimumDistance)
             return false;
 
-        // add up distances between all points sampled during the gesture to get the real distance
-        float realDistance = 0f;
-        for (int i = 1; i < this._points.Count; i++)
-            realDistance += Vector2.Distance(this._points[i], this._points[i - 1]);
-
-        // if the real distance is 10% greater than the ideal distance, then fail
-        // this weeds out really irregular "lines" and curves from being considered swipes
-        if (realDistance > idealDistance * 1.1f)
-            return false;
+//        // add up distances between all points sampled during the gesture to get the real distance
+//        float realDistance = 0f;
+//        for (int i = (state == TKGestureRecognizerState.Began) ? 1 : midwayPointIndex; i < this._points.Count; i++)
+//            realDistance += Vector2.Distance(this._points[i], this._points[i - 1]);
+//
+//        // if the real distance is 10% greater than the ideal distance, then fail
+//        // this weeds out really irregular "lines" and curves from being considered swipes
+//        if (realDistance > idealDistance * 1.1f)
+//            return false;
 
         // the speed in cm/s of the swipe
         swipeVelocity = idealDistanceCM / (Time.time - this._startTime);
 
         // turn the slope of the ideal swipe line into an angle in degrees
-        Vector2 v2 = (endPoint - startPoint).normalized;
+        Vector2 v2 = (endPoint - referencePoint).normalized;
         float swipeAngle = Mathf.Atan2(v2.y, v2.x) * Mathf.Rad2Deg;
         if (swipeAngle < 0)
             swipeAngle = 360 + swipeAngle;
         swipeAngle = 360 - swipeAngle;
 
-        // depending on the angle of the line, give a logical swipe direction
-        if (swipeAngle >= 292.5f && swipeAngle <= 337.5f)
-            completedSwipeDirection = TKSwipeDirection.UpRight;
-        else if (swipeAngle >= 247.5f && swipeAngle <= 292.5f)
+        
+        if (swipeAngle >= 225f && swipeAngle <= 315f)
             completedSwipeDirection = TKSwipeDirection.Up;
-        else if (swipeAngle >= 202.5f && swipeAngle <= 247.5f)
-            completedSwipeDirection = TKSwipeDirection.UpLeft;
-        else if (swipeAngle >= 157.5f && swipeAngle <= 202.5f)
+        else if (swipeAngle >= 135f && swipeAngle <= 225f)
             completedSwipeDirection = TKSwipeDirection.Left;
-        else if (swipeAngle >= 112.5f && swipeAngle <= 157.5f)
-            completedSwipeDirection = TKSwipeDirection.DownLeft;
-        else if (swipeAngle >= 67.5f && swipeAngle <= 112.5f)
+        else if (swipeAngle >= 45f && swipeAngle <= 135f)
             completedSwipeDirection = TKSwipeDirection.Down;
-        else if (swipeAngle >= 22.5f && swipeAngle <= 67.5f)
-            completedSwipeDirection = TKSwipeDirection.DownRight;
-        else // swipeAngle >= 337.5f || swipeAngle <= 22.5f
+        else // swipeAngle >= 315f || swipeAngle <= 45f
             completedSwipeDirection = TKSwipeDirection.Right;
+
+//        // depending on the angle of the line, give a logical swipe direction
+//        if (swipeAngle >= 292.5f && swipeAngle <= 337.5f)
+//            completedSwipeDirection = TKSwipeDirection.UpRight;
+//        else if (swipeAngle >= 247.5f && swipeAngle <= 292.5f)
+//            completedSwipeDirection = TKSwipeDirection.Up;
+//        else if (swipeAngle >= 202.5f && swipeAngle <= 247.5f)
+//            completedSwipeDirection = TKSwipeDirection.UpLeft;
+//        else if (swipeAngle >= 157.5f && swipeAngle <= 202.5f)
+//            completedSwipeDirection = TKSwipeDirection.Left;
+//        else if (swipeAngle >= 112.5f && swipeAngle <= 157.5f)
+//            completedSwipeDirection = TKSwipeDirection.DownLeft;
+//        else if (swipeAngle >= 67.5f && swipeAngle <= 112.5f)
+//            completedSwipeDirection = TKSwipeDirection.Down;
+//        else if (swipeAngle >= 22.5f && swipeAngle <= 67.5f)
+//            completedSwipeDirection = TKSwipeDirection.DownRight;
+//        else // swipeAngle >= 337.5f || swipeAngle <= 22.5f
+//            completedSwipeDirection = TKSwipeDirection.Right;
 
         return true;
     }
@@ -221,13 +244,15 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
     internal override void touchesMoved(List<TKTouch> touches)
     {
         // only bother doing anything if we haven't recognized or failed yet
-        if (state == TKGestureRecognizerState.Began)
+        if (state == TKGestureRecognizerState.Began || state == TKGestureRecognizerState.RecognizedAndStillRecognizing)
         {
             this._points.Add(touches[0].position);
-
             // if we're triggering when the criteria is met, then check for completion every frame
-            if (triggerWhenCriteriaMet && checkForSwipeCompletion(touches[0]))
+            if (triggerWhenCriteriaMet && checkForSwipeCompletion(touches[0])) {
                 state = TKGestureRecognizerState.RecognizedAndStillRecognizing;
+                this.midwayPoint = touches[0].position;
+                this.midwayPointIndex = _points.Count - 1;
+            }
         }
     }
 

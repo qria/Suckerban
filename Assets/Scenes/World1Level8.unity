@@ -3400,14 +3400,24 @@ Prefab:
     - target: {fileID: 114000010894004538, guid: 35479009df7df174c9ca89ac619e6ed7,
         type: 2}
       propertyPath: NextLevelName
-      value: World1Level3
+      value: World0Level2
       objectReference: {fileID: 0}
-    - target: {fileID: 82000011560151210, guid: 35479009df7df174c9ca89ac619e6ed7,
+    - target: {fileID: 82000011552906622, guid: 35479009df7df174c9ca89ac619e6ed7,
         type: 2}
-      propertyPath: m_audioClip
-      value: 
-      objectReference: {fileID: 8300000, guid: f6d9b919554c2864d9938d8726199198, type: 3}
-    m_RemovedComponents: []
+      propertyPath: Mute
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 82000012577098942, guid: 35479009df7df174c9ca89ac619e6ed7,
+        type: 2}
+      propertyPath: Mute
+      value: 0
+      objectReference: {fileID: 0}
+    m_RemovedComponents:
+    - {fileID: 82000013768072522, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
+    - {fileID: 82000013089534800, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
+    - {fileID: 82000011995052896, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
+    - {fileID: 82000011552906622, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
+    - {fileID: 82000012259682372, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
   m_ParentPrefab: {fileID: 100100000, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
   m_IsPrefabParent: 0
 --- !u!1001 &786196821

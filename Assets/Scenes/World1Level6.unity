@@ -6453,6 +6453,11 @@ Prefab:
       propertyPath: NextLevelName
       value: World1Level7
       objectReference: {fileID: 0}
+    - target: {fileID: 82000011560151210, guid: 35479009df7df174c9ca89ac619e6ed7,
+        type: 2}
+      propertyPath: m_audioClip
+      value: 
+      objectReference: {fileID: 8300000, guid: c50967625a924344ab192712e5f11bde, type: 3}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 35479009df7df174c9ca89ac619e6ed7, type: 2}
   m_IsPrefabParent: 0

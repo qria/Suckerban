@@ -54,8 +54,7 @@ public class Player : SuckerbanObject
             isBeingSwiped = false;
         };
         TouchKit.addGestureRecognizer(swipeRecognizer);
-
-        Debug.Log(level.ActionButton.transform.position);
+        
         buttonRecognizer = new TKButtonRecognizer(new TKRect(0, 0, 100, 100f));
         buttonRecognizer.zIndex = 1;
         buttonRecognizer.onSelectedEvent += (r) => {
@@ -64,6 +63,14 @@ public class Player : SuckerbanObject
             }
         };
         TouchKit.addGestureRecognizer(buttonRecognizer);
+
+
+        var recognizer = new TKLongPressRecognizer(7f, 1f, -1);
+        recognizer.gestureRecognizedEvent += (r) =>
+        {
+            level.LoadNextLevel();
+        };
+        TouchKit.addGestureRecognizer(recognizer);
     }
 
 	protected override void UpdateInput ()

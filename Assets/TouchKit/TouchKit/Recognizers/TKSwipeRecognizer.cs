@@ -241,8 +241,7 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
         return false;
     }
 
-    internal override void touchesMoved(List<TKTouch> touches)
-    {
+    internal override void touchesMoved(List<TKTouch> touches) {
         // only bother doing anything if we haven't recognized or failed yet
         if (state == TKGestureRecognizerState.Began || state == TKGestureRecognizerState.RecognizedAndStillRecognizing)
         {

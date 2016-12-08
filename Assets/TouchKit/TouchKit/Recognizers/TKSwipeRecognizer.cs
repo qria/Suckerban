@@ -1,3 +1,6 @@
+// This is a modified version of the original TKSwipeRecognizer
+
+
 using UnityEngine;
 using System.Collections;
 using System.Collections.Generic;

@@ -18,7 +18,7 @@ public class Player : SuckerbanObject
     private BoxCollider2D collider;
     private TKSwipeRecognizer swipeRecognizer;
     private bool isBeingSwiped;
-    private TKTapRecognizer tapRecognizer;
+    private TKButtonRecognizer buttonRecognizer;
 
     // For bomberman
     public int bombCount; // How many bombs I've got
@@ -53,15 +53,18 @@ public class Player : SuckerbanObject
             isBeingSwiped = false;
         };
         TouchKit.addGestureRecognizer(swipeRecognizer);
-        
-        // Place Bomb
-        tapRecognizer = new TKTapRecognizer();
-        tapRecognizer.gestureRecognizedEvent += (r) => {
-            action();
+
+        Debug.Log(level.ActionButton.transform.position);
+        buttonRecognizer = new TKButtonRecognizer(new TKRect(0, 0, 100, 100f));
+        buttonRecognizer.zIndex = 1;
+        buttonRecognizer.onSelectedEvent += (r) => {
+            if (level.isActionButtonShown) {
+                action();
+            }
         };
-        TouchKit.addGestureRecognizer(tapRecognizer);
+        TouchKit.addGestureRecognizer(buttonRecognizer);
     }
-	
+
 	protected override void UpdateInput ()
     {
         // Mobile Direction Control
@@ -101,6 +104,9 @@ public class Player : SuckerbanObject
         // When eating bomberman items.
         switch (itemType) {
             case ItemTypes.Bomb:
+                if (!level.isActionButtonShown) {
+                    level.isActionButtonShown = true;
+                }
                 bombCount += 1;
                 break;
             case ItemTypes.SpeedUp:

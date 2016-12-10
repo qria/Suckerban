@@ -13,7 +13,7 @@ public class LevelManager : MonoBehaviour
     private List<SuckerbanObject> allObjectsOnGrid = new List<SuckerbanObject>();
     private AudioSource BGM;
     private AudioSource DeathSound;
-    private GameObject gameOverScreen;
+    private Image gameOverImage;
     private GameObject ActionButton;
 
     [HideInInspector]
@@ -51,8 +51,8 @@ public class LevelManager : MonoBehaviour
         SetBombSound = Audios[5];
         BombSound = Audios[6];
 
-        gameOverScreen = GameObject.Find("GameOverImage");
-        gameOverScreen.SetActive(false);
+        gameOverImage = GameObject.Find("GameOverImage").GetComponent<Image>();
+        gameOverImage.enabled = false;
 
         ActionButton = GameObject.Find("ActionButton");
         ActionButton.transform.position = new Vector2(100, 100); // Position the button
@@ -151,7 +151,7 @@ public class LevelManager : MonoBehaviour
     public void gameOver() {
         BGM.Stop();
         DeathSound.Play();
-        gameOverScreen.SetActive(true);
+        gameOverImage.enabled = true;
         Destroy(currentPlayer.transform.gameObject);
 
         // Tap to restart level. Mostly for mobile

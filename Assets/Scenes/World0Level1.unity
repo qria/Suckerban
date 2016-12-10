@@ -983,6 +983,11 @@ Prefab:
       propertyPath: NextLevelName
       value: 
       objectReference: {fileID: 0}
+    - target: {fileID: 114000010773261014, guid: 52db79eb4ed09a24197ff4907c7b1369,
+        type: 2}
+      propertyPath: m_Color.a
+      value: 0.49803922
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_ParentPrefab: {fileID: 100100000, guid: 52db79eb4ed09a24197ff4907c7b1369, type: 2}
   m_IsPrefabParent: 0

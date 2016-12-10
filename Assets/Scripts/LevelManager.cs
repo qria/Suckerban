@@ -1,7 +1,9 @@
-﻿using UnityEngine;
+﻿using System;
+using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.SceneManagement;
 using System.Linq;
+using System.Text.RegularExpressions;
 using UnityEngine.UI;
 
 public delegate bool Mission();
@@ -11,13 +13,16 @@ public class LevelManager : MonoBehaviour
     private List<SuckerbanObject> allObjectsOnGrid = new List<SuckerbanObject>();
     private AudioSource BGM;
     private AudioSource DeathSound;
-    public Player currentPlayer;
-    public GameObject gameOverScreen;
-    public string NextLevelName;
+    private GameObject gameOverScreen;
+    private GameObject ActionButton;
 
-    public GameObject ActionButton;
+    [HideInInspector]
+    public Player currentPlayer;
+    [HideInInspector]
     public ItemUI itemUI;
 
+    public string NextLevelName; // If this isn't given, it tries to guess the name of the next level.
+    
     private bool _isActionButtonShown;
     public bool isActionButtonShown {
         get { return _isActionButtonShown; }
@@ -40,17 +45,19 @@ public class LevelManager : MonoBehaviour
         AudioSource[] Audios = GetComponents<AudioSource>();
         DeathSound = Audios[0];
         BGM = Audios[1];
-        gameOverScreen.SetActive(false);
-
         MoveSound = Audios[2];
         PushSound = Audios[3];
         ItemSound = Audios[4];
         SetBombSound = Audios[5];
         BombSound = Audios[6];
 
+        gameOverScreen = GameObject.Find("GameOverImage");
+        gameOverScreen.SetActive(false);
+
         ActionButton = GameObject.Find("ActionButton");
         ActionButton.transform.position = new Vector2(100, 100); // Position the button
         isActionButtonShown = false;
+
 
         itemUI = FindObjectOfType<ItemUI>();
     }
@@ -94,7 +101,40 @@ public class LevelManager : MonoBehaviour
     }
 
     public void LoadNextLevel() {
-        SceneManager.LoadScene(NextLevelName);
+        // Tries to load levels by following order
+        // 1. given NextLevelName 
+        // 2. current world, level + 1 
+        // 3. current world + 1, level 1
+
+        if (NextLevelName != "") { 
+            SceneManager.LoadScene(NextLevelName);
+        }
+        // Try to guess the name of next level if not given
+        Scene scene = SceneManager.GetActiveScene();
+
+        Regex regex = new Regex(@"(.*)(\d+)");
+        Match match = regex.Match(scene.name);
+        if (match.Success) {
+            int nextLevel = Int32.Parse(match.Groups[2].Value) + 1;
+            string nextLevelName = match.Groups[1].Value + nextLevel;
+            if (Application.CanStreamedLevelBeLoaded(nextLevelName)) {
+                SceneManager.LoadScene(nextLevelName);
+                return;
+            }
+        }
+
+        regex = new Regex(@"(.*)(\d+)(\w+)(\d+)");
+        match = regex.Match(scene.name);
+        if (match.Success) {
+            int nextWorld = Int32.Parse(match.Groups[2].Value) + 1;
+            string nextLevelName = match.Groups[1].Value + nextWorld + match.Groups[3] + "1";
+            if (Application.CanStreamedLevelBeLoaded(nextLevelName)) {
+                SceneManager.LoadScene(nextLevelName);
+                return;
+            }
+        }
+
+        throw new Exception("Can't find next level!!!");
     }
 
     public SuckerbanObject GetObjectInPosition(IntVector2 position)

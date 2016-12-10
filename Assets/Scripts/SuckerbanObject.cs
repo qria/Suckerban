@@ -32,12 +32,14 @@ public class SuckerbanObject : MonoBehaviour {
             return localPositions.ConvertAll(x => position + x);
         }
     }
-    
+
+    [HideInInspector]
     public bool isPushable = false; // Set this to true if you want it to be pushable
 
     // For movements
     protected bool isMoving = false;
     protected float remainingMoveDistance;
+    [HideInInspector]
     public float moveSpeed = 6f;
     protected Direction moveDirection;
 

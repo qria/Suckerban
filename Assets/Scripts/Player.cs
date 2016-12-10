@@ -21,12 +21,17 @@ public class Player : SuckerbanObject
     private TKButtonRecognizer buttonRecognizer;
 
     // For bomberman
+    [HideInInspector]
     public int bombCount; // How many bombs I've got
+    [HideInInspector]
     public float bombFuse; // How fast bomb goes BOOM
+    [HideInInspector]
     public int bombLength; // How long the tail of bomb is
+    [HideInInspector]
     public bool isAtomicBomb;
 
     // Constants? May need to organize it with global constants
+    [HideInInspector]
     public float swipeRecognizeDistance = 0.1f; // in cm
 
     protected override void AwakeInitialize() {

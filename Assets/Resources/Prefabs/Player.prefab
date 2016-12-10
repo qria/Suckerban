@@ -90,6 +90,8 @@ MonoBehaviour:
   bombCount: 0
   bombFuse: 1
   bombLength: 3
+  isAtomicBomb: 0
+  swipeRecognizeDistance: 0.1
 --- !u!212 &212000011105476164
 SpriteRenderer:
   m_ObjectHideFlags: 1
@@ -119,7 +121,7 @@ SpriteRenderer:
   m_LightmapParameters: {fileID: 0}
   m_SortingLayerID: 0
   m_SortingOrder: 1
-  m_Sprite: {fileID: 21300000, guid: 285353c672432a34ebe88f51fdd0f7f6, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 6e1dee0b2ae13fc4cad3171b3e161b08, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0

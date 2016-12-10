@@ -16,6 +16,7 @@ public class LevelManager : MonoBehaviour
     public string NextLevelName;
 
     public GameObject ActionButton;
+    public ItemUI itemUI;
 
     private bool _isActionButtonShown;
     public bool isActionButtonShown {
@@ -50,6 +51,8 @@ public class LevelManager : MonoBehaviour
         ActionButton = GameObject.Find("ActionButton");
         ActionButton.transform.position = new Vector2(100, 100); // Position the button
         isActionButtonShown = false;
+
+        itemUI = FindObjectOfType<ItemUI>();
     }
     
 	void Update () {

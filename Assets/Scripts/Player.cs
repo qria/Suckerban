@@ -112,9 +112,8 @@ public class Player : SuckerbanObject
         // When eating bomberman items.
         switch (itemType) {
             case ItemTypes.Bomb:
-                if (!level.isActionButtonShown) {
-                    level.isActionButtonShown = true;
-                }
+                level.itemUI.enableUI();
+                level.isActionButtonShown = true;
                 bombCount += 1;
                 break;
             case ItemTypes.SpeedUp:

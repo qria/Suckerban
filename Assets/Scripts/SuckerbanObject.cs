@@ -65,9 +65,13 @@ public class SuckerbanObject : MonoBehaviour {
     void Update() {
         // Broke down Update() into multiple methods
         // It is strongly encouraged not to use `Update()` in children class
+        UpdateAnimationParameters();
         UpdateMoveAnimation();
         UpdateInput();
         UpdateLogic();
+    }
+
+    protected virtual void UpdateAnimationParameters() {
     }
 
     protected virtual void UpdateMoveAnimation() {

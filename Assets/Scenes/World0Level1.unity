@@ -1543,6 +1543,28 @@ SpriteRenderer:
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
+--- !u!1 &1824850627 stripped
+GameObject:
+  m_PrefabParentObject: {fileID: 1000013945072376, guid: 0c1f00e57dc419946873dfe284abb300,
+    type: 2}
+  m_PrefabInternal: {fileID: 1912363020}
+--- !u!95 &1824850628
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 0
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 0}
+  m_GameObject: {fileID: 1824850627}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8ed0cae68669c6f498012fd51180f131, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!1 &1844749869
 GameObject:
   m_ObjectHideFlags: 0

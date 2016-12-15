@@ -79,7 +79,7 @@ static class DirectionMethods {
         return tkSwipeDirectionToDirectionDictionary[tkSwipeDirection];
     }
     
-    public static Array All(this Direction direction){
+    public static Array All(){
         return Enum.GetValues(typeof(Direction));
     }
 }

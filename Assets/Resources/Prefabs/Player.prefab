@@ -23,6 +23,7 @@ GameObject:
   - 114: {fileID: 114000012701123454}
   - 61: {fileID: 61000010252758314}
   - 50: {fileID: 50000013114878786}
+  - 95: {fileID: 95000012657375368}
   m_Layer: 0
   m_Name: Player
   m_TagString: Player
@@ -37,7 +38,7 @@ Transform:
   m_PrefabInternal: {fileID: 100100000}
   m_GameObject: {fileID: 1000013945072376}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: -2, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_Children: []
@@ -74,6 +75,23 @@ BoxCollider2D:
   m_Offset: {x: 0, y: 0}
   serializedVersion: 2
   m_Size: {x: 0.8, y: 0.8}
+--- !u!95 &95000012657375368
+Animator:
+  serializedVersion: 3
+  m_ObjectHideFlags: 1
+  m_PrefabParentObject: {fileID: 0}
+  m_PrefabInternal: {fileID: 100100000}
+  m_GameObject: {fileID: 1000013945072376}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 8ed0cae68669c6f498012fd51180f131, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
 --- !u!114 &114000012701123454
 MonoBehaviour:
   m_ObjectHideFlags: 1
@@ -92,6 +110,8 @@ MonoBehaviour:
   bombLength: 3
   isAtomicBomb: 0
   swipeRecognizeDistance: 0.1
+  facingDirection: 0
+  animator: {fileID: 0}
 --- !u!212 &212000011105476164
 SpriteRenderer:
   m_ObjectHideFlags: 1

@@ -34,6 +34,10 @@ public class Player : SuckerbanObject
     [HideInInspector]
     public float swipeRecognizeDistance = 0.1f; // in cm
 
+    [HideInInspector] public Direction facingDirection;
+
+    public Animator animator;
+
     protected override void AwakeInitialize() {
         level.PlaceOnGrid(this);
         level.currentPlayer = this;
@@ -75,24 +79,27 @@ public class Player : SuckerbanObject
             level.LoadNextLevel();
         };
         TouchKit.addGestureRecognizer(recognizer);
+
+        animator = GetComponent<Animator>();
+        facingDirection = Direction.Down;
     }
 
-	protected override void UpdateInput ()
-    {
+    protected override void UpdateAnimationParameters() {
+        animator.SetBool("isMoving", isMoving);
+        animator.SetInteger("direction", (int)facingDirection);
+    }
+    protected override void UpdateInput () {
         // Mobile Direction Control
 	    if (isBeingSwiped && !isMoving) {
-            push(swipeRecognizer.completedSwipeDirection.ToDirection());
-        }
+	        Direction pushDirection = swipeRecognizer.completedSwipeDirection.ToDirection();
+	        processDirectionalInput(pushDirection);
+	    }
 
         // PC Direction Control
 	    if (!isMoving) {
-            foreach (Direction direction in Enum.GetValues(typeof(Direction))) {
-                KeyCode keyCode = direction.GetKeyCode();
-                if (Input.GetKey(keyCode)) {
-                    bool pushSuccess = push(keyCode.GetDirection());
-                    if (pushSuccess) { // Only play sound if pushing succeeds
-                        level.playMoveSound();
-                    }
+            foreach (Direction direction in DirectionMethods.All()) {
+                if (Input.GetKey(direction.GetKeyCode())) {
+                    processDirectionalInput(direction);
                     break; // Only register one direction key per frame.
                 }
             }
@@ -107,6 +114,14 @@ public class Player : SuckerbanObject
         // Mobile Action key control is registered via tapRecognizer
         if (Input.GetKeyDown(KeyCode.Space)) {
             action();
+        }
+    }
+
+    private void processDirectionalInput(Direction direction) {
+        facingDirection = direction;
+        bool pushSuccess = push(direction);
+        if (pushSuccess) { // Only play sound if pushing succeeds
+            level.playMoveSound();
         }
     }
 

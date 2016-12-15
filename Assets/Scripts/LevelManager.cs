@@ -85,6 +85,14 @@ public class LevelManager : MonoBehaviour
             TouchKit.addGestureRecognizer(recognizer);
         }
 
+        // If cleared press any key to go to next level
+        if (isLevelCleared) {
+            if (Input.anyKeyDown) {
+                LoadNextLevel();
+            }
+        }
+
+
         // Restart current scene
         if (Input.GetKeyDown(KeyCode.R)) {
             RestartLevel();

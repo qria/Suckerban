@@ -117,7 +117,10 @@ public class Player : SuckerbanObject
         switch (itemType) {
             case ItemTypes.Bomb:
                 level.itemUI.enableUI();
+#if UNITY_STANDALONE
+#else // Button shown only for mobile and editor
                 level.isActionButtonShown = true;
+#endif
                 bombCount += 1;
                 break;
             case ItemTypes.SpeedUp:

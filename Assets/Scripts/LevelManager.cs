@@ -33,6 +33,8 @@ public class LevelManager : MonoBehaviour
         }
     }
 
+    private bool isLevelCleared;
+
 
     private AudioSource ItemSound;
     private AudioSource MoveSound;
@@ -68,10 +70,11 @@ public class LevelManager : MonoBehaviour
     
 	void Update () {
         // Check if all missions are acomplished
-        if (missions.All(mission => mission())) {
+        if (!isLevelCleared && missions.All(mission => mission())) {
             
             Destroy(currentPlayer.transform.gameObject);
 
+            isLevelCleared = true;
             levelClearImage.enabled = true;
 
             // Press any key to go to next level

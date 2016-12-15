@@ -145,16 +145,11 @@ public class TKSwipeRecognizer : TKAbstractGestureRecognizer
         if (this._points.Count < 2)
             return false;
 
-        if (state != TKGestureRecognizerState.Began && _points.Count > 100) {
-            Debug.Log("HI");
-        }
         Vector2 referencePoint = (state == TKGestureRecognizerState.Began) ? startPoint : midwayPoint;
 
         // the ideal distance in pixels from the start to the finish
         float idealDistance = Vector2.Distance(referencePoint, endPoint);
-
-        Debug.Log(idealDistance);
-
+        
         // the ideal distance in centimeters, based on the screen pixel density
         float idealDistanceCM = idealDistance / TouchKit.instance.ScreenPixelsPerCm;
 

@@ -14,10 +14,9 @@ public class Item : SuckerbanObject {
 
     public static Object prefab;
     public static Item Create(IntVector2 position, ItemTypes itemType) {
+        if (itemType == ItemTypes.None)
+            return null;
         switch (itemType) {
-            case ItemTypes.None:
-                prefab = Resources.Load("Prefabs/Empty");
-                break;
             case ItemTypes.Bomb:
                 prefab = Resources.Load("Prefabs/BombItem");
                 break;

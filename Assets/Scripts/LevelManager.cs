@@ -14,6 +14,7 @@ public class LevelManager : MonoBehaviour
     private AudioSource BGM;
     private AudioSource DeathSound;
     private Image gameOverImage;
+    private Image levelClearImage;
     private GameObject ActionButton;
 
     [HideInInspector]
@@ -54,6 +55,9 @@ public class LevelManager : MonoBehaviour
         gameOverImage = GameObject.Find("GameOverImage").GetComponent<Image>();
         gameOverImage.enabled = false;
 
+        levelClearImage = GameObject.Find("LevelClearImage").GetComponent<Image>();
+        levelClearImage.enabled = false;
+        
         ActionButton = GameObject.Find("ActionButton");
         ActionButton.transform.position = new Vector2(100, 100); // Position the button
         isActionButtonShown = false;
@@ -64,11 +68,18 @@ public class LevelManager : MonoBehaviour
     
 	void Update () {
         // Check if all missions are acomplished
-        if (missions.All(mission => mission()) || Input.GetKeyDown(KeyCode.F1)) {
-            // TODO: Show congratz screen here
+        if (missions.All(mission => mission())) {
+            
+            Destroy(currentPlayer.transform.gameObject);
 
-            // Go to next level
-            LoadNextLevel();
+            levelClearImage.enabled = true;
+
+            // Press any key to go to next level
+            var recognizer = new TKTapRecognizer();
+            recognizer.gestureRecognizedEvent += (r) => {
+                LoadNextLevel();
+            };
+            TouchKit.addGestureRecognizer(recognizer);
         }
 
         // Restart current scene

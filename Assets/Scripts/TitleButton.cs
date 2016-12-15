@@ -8,4 +8,7 @@ public class TitleButton : MonoBehaviour {
     public void startHardGame() {
         SceneManager.LoadScene(firstLevel);
     }
+    public void startNormalGame() {
+        SceneManager.LoadScene(firstLevel);
+    }
 }
